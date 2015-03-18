@@ -94,7 +94,7 @@ static void adapter_state_change_callback(bt_state_t status) {
     if(sJniCallbacksObj) {
        callbackEnv->CallVoidMethod(sJniCallbacksObj, method_stateChangeCallback, (jint)status);
     } else {
-       ALOGE("JNI ERROR : JNI reference already cleaned : adapter_state_change_callback", __FUNCTION__);
+       ALOGE("JNI ERROR : JNI reference already cleaned : '%s'", __FUNCTION__);
     }
     checkAndClearExceptionFromCallback(callbackEnv, __FUNCTION__);
 }
