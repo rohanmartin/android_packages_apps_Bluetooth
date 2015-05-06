@@ -24,10 +24,13 @@ final class JniCallbacks {
     private AdapterProperties mAdapterProperties;
     private AdapterState mAdapterStateMachine;
     private BondStateMachine mBondStateMachine;
+    private VSCallbackList mVSCallbacks;
 
-    JniCallbacks(AdapterState adapterStateMachine,AdapterProperties adapterProperties) {
+    JniCallbacks(AdapterState adapterStateMachine,AdapterProperties adapterProperties,
+            VSCallbackList VSCallbacks) {
         mAdapterStateMachine = adapterStateMachine;
         mAdapterProperties = adapterProperties;
+        mVSCallbacks = VSCallbacks;
     }
 
     void init(BondStateMachine bondStateMachine, RemoteDevices remoteDevices) {
@@ -88,5 +91,13 @@ final class JniCallbacks {
     void deviceMasInstancesFoundCallback(int status, byte[] address, String[] name, int[] scn,
             int[] id, int[] msgtype) {
         mRemoteDevices.deviceMasInstancesFoundCallback(status, address, name, scn, id, msgtype);
+    }
+
+    void vendorSpecificReceiveCallback(short opcode, byte[] parameters) {
+        mVSCallbacks.onVSCommandComplete(opcode, parameters);
+    }
+
+    void vendorSpecificEventCallback(byte[] parameters) {
+        mVSCallbacks.onVSEvent(parameters);
     }
 }

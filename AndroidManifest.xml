@@ -85,6 +85,7 @@
             android:name = ".btservice.AdapterService">
             <intent-filter>
                 <action android:name="android.bluetooth.IBluetooth" />
+                <action android:name="android.bluetooth.IBluetoothVS" />
             </intent-filter>
         </service>
         <service
